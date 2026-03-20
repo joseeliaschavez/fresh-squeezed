@@ -5,13 +5,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "==> [16-FASTFETCH] Setting up fastfetch..."
 
-if ! brew list fastfetch &>/dev/null; then
-  echo "Installing fastfetch..."
-  brew install fastfetch
-else
-  echo "fastfetch already installed."
-fi
-
 if [ ! -d "$HOME/.oh-my-zsh/custom" ]; then
   echo "Oh My Zsh custom dir not found at ~/.oh-my-zsh/custom. Run 03-shell.sh first." >&2
   exit 1
@@ -23,6 +16,13 @@ DEST="$HOME/.oh-my-zsh/custom/fastfetch.zsh"
 if [ ! -f "$SRC" ]; then
   echo "Source file not found: $SRC" >&2
   exit 1
+fi
+
+if ! brew list fastfetch &>/dev/null; then
+  echo "Installing fastfetch..."
+  brew install fastfetch
+else
+  echo "fastfetch already installed."
 fi
 
 if [ ! -f "$DEST" ]; then
