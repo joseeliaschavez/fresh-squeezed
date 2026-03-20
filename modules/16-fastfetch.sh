@@ -18,7 +18,7 @@ if [ ! -f "$SRC" ]; then
   exit 1
 fi
 
-if ! brew list fastfetch &>/dev/null; then
+if ! command -v fastfetch &>/dev/null; then
   echo "Installing fastfetch..."
   brew install fastfetch
 else
