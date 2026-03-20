@@ -21,6 +21,7 @@ MODULES=(
   "13-dev-tools"
   "14-ai-tools"
   "15-zshrc-cleanup"
+  "16-fastfetch"
 )
 
 usage() {
