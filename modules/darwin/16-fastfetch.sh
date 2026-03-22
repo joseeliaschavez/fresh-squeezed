@@ -10,7 +10,7 @@ if [ ! -d "$HOME/.oh-my-zsh/custom" ]; then
   exit 1
 fi
 
-SRC="$SCRIPT_DIR/../config/fastfetch.zsh"
+SRC="$SCRIPT_DIR/../../config/fastfetch.zsh"
 DEST="$HOME/.oh-my-zsh/custom/fastfetch.zsh"
 
 if [ ! -f "$SRC" ]; then
