@@ -26,9 +26,7 @@ build_module_list() {
     fi
   done
   # Sort by basename (numeric prefix)
-  printf '%s\n' "${modules[@]}" | sort -t/ -k"$(echo "${modules[0]}" | tr '/' '\n' | wc -l)" | while read -r path; do
-    echo "$path"
-  done
+  printf '%s\n' "${modules[@]}" | awk -F/ '{print $NF, $0}' | sort | awk '{print $2}'
 }
 
 usage() {
