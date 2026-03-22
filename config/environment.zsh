@@ -6,10 +6,14 @@ export PATH="$PATH:$HOME/.local/bin"
 # Setup Rust and Cargo
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
-# Python via Homebrew
-export PYTHON_HOME=/opt/homebrew/bin
+# Python — platform-aware path
+if [ -d "/opt/homebrew/bin" ]; then
+  export PYTHON_HOME=/opt/homebrew/bin
+elif [ -d "/usr/bin" ]; then
+  export PYTHON_HOME=/usr/bin
+fi
 export PATH="$PYTHON_HOME:$PATH"
-alias python="$PYTHON_HOME/python3"
+alias python="python3"
 
 # Dotnet
 export PATH="$PATH:$HOME/.dotnet"
