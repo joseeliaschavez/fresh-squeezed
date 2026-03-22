@@ -12,7 +12,7 @@ else
   echo "Oh My Zsh already installed."
 fi
 
-ENV_SRC="$SCRIPT_DIR/../config/environment.zsh"
+ENV_SRC="$SCRIPT_DIR/../../config/environment.zsh"
 ENV_DEST="$HOME/.oh-my-zsh/custom/environment.zsh"
 
 if [ ! -f "$ENV_DEST" ]; then
