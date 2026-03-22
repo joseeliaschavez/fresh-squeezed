@@ -10,12 +10,29 @@ Automated, idempotent setup scripts for macOS and Debian developer machines. Ins
 - Internet connection
 - A GitHub account
 
-## Usage
+## Quick Install
 
-### Run the full setup
+Run this in your terminal:
 
 ```bash
-cd ~/Workspaces/Slalom/dev-setup
+curl -sSf https://raw.githubusercontent.com/joseeliaschavez/fresh-squeezed/develop/install.sh | bash
+```
+
+This will:
+1. Check that `git` and `curl` are installed
+2. Detect your platform (macOS or Debian)
+3. Clone the repo to `~/.fresh-squeezed`
+4. Run the full setup
+
+> **Tip:** You can [inspect the script](https://github.com/joseeliaschavez/fresh-squeezed/blob/develop/install.sh) before running it.
+
+## Manual Install
+
+If you prefer to clone manually or want to customize:
+
+```bash
+git clone https://github.com/joseeliaschavez/fresh-squeezed.git ~/.fresh-squeezed
+cd ~/.fresh-squeezed
 ./setup.sh
 ```
 
