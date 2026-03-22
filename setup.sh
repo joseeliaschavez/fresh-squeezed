@@ -2,27 +2,34 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-MODULES_DIR="$SCRIPT_DIR/modules"
 
-MODULES=(
-  "00-ssh"
-  "01-homebrew"
-  "02-xcode"
-  "03-shell"
-  "04-fonts"
-  "05-neovim"
-  "06-rust"
-  "07-go"
-  "08-python"
-  "09-node"
-  "10-java"
-  "11-dotnet"
-  "12-docker"
-  "13-dev-tools"
-  "14-ai-tools"
-  "15-zshrc-cleanup"
-  "16-fastfetch"
-)
+# Load platform detection
+source "$SCRIPT_DIR/lib/platform.sh"
+PLATFORM=$(detect_platform)
+
+if [ "$PLATFORM" = "unsupported" ]; then
+  echo "Error: Unsupported platform. This script supports macOS and Debian-based Linux." >&2
+  exit 1
+fi
+
+COMMON_DIR="$SCRIPT_DIR/modules/common"
+PLATFORM_DIR="$SCRIPT_DIR/modules/$PLATFORM"
+
+# Build sorted module list from common + platform directories
+build_module_list() {
+  local modules=()
+  for dir in "$COMMON_DIR" "$PLATFORM_DIR"; do
+    if [ -d "$dir" ]; then
+      for script in "$dir"/*.sh; do
+        [ -f "$script" ] && modules+=("$script")
+      done
+    fi
+  done
+  # Sort by basename (numeric prefix)
+  printf '%s\n' "${modules[@]}" | sort -t/ -k"$(echo "${modules[0]}" | tr '/' '\n' | wc -l)" | while read -r path; do
+    echo "$path"
+  done
+}
 
 usage() {
   echo "Usage: $0 [--module <module-name>] [--list]"
@@ -32,22 +39,33 @@ usage() {
   echo "  --list            List all available modules"
   echo ""
   echo "Without arguments, runs all modules in order."
+  echo ""
+  echo "Detected platform: $PLATFORM"
 }
 
 list_modules() {
-  echo "Available modules:"
-  for mod in "${MODULES[@]}"; do
-    echo "  $mod"
+  echo "Available modules (platform: $PLATFORM):"
+  while IFS= read -r script; do
+    echo "  $(basename "${script%.sh}")"
+  done < <(build_module_list)
+}
+
+find_module() {
+  local name="$1"
+  for dir in "$COMMON_DIR" "$PLATFORM_DIR"; do
+    local script="$dir/${name}.sh"
+    if [ -f "$script" ]; then
+      echo "$script"
+      return 0
+    fi
   done
+  return 1
 }
 
 run_module() {
-  local name="$1"
-  local script="$MODULES_DIR/${name}.sh"
-  if [ ! -f "$script" ]; then
-    echo "Error: Module not found: $script" >&2
-    exit 1
-  fi
+  local script="$1"
+  local name
+  name="$(basename "${script%.sh}")"
   echo ""
   echo "========================================"
   echo "Running: $name"
@@ -68,12 +86,18 @@ done
 
 mkdir -p "$HOME/.local/bin"
 
+echo "Platform detected: $PLATFORM"
+
 if [ -n "$SINGLE_MODULE" ]; then
-  run_module "$SINGLE_MODULE"
+  script=$(find_module "$SINGLE_MODULE") || {
+    echo "Error: Module not found: $SINGLE_MODULE (checked common/ and $PLATFORM/)" >&2
+    exit 1
+  }
+  run_module "$script"
 else
-  for mod in "${MODULES[@]}"; do
-    run_module "$mod"
-  done
+  while IFS= read -r script; do
+    run_module "$script"
+  done < <(build_module_list)
   echo ""
   echo "========================================"
   echo "Setup complete! Run: source ~/.zshrc"
