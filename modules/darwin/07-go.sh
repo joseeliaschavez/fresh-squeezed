@@ -12,7 +12,7 @@ fi
 
 if [ ! -d "$HOME/.gvm" ]; then
   echo "Installing GVM..."
-  zsh < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 else
   echo "GVM already installed."
 fi
