@@ -31,4 +31,11 @@ else
   echo "opencode already installed."
 fi
 
+if ! command -v pi &>/dev/null; then
+  echo "Installing Pi agent..."
+  curl -fsSL https://pi.dev/install.sh | sh
+else
+  echo "Pi agent already installed."
+fi
+
 echo "Done. AI tools installed."
