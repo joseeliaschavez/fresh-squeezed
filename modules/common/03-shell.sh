@@ -12,14 +12,18 @@ else
   echo "Oh My Zsh already installed."
 fi
 
-ENV_SRC="$SCRIPT_DIR/../../config/environment.zsh"
-ENV_DEST="$HOME/.oh-my-zsh/custom/environment.zsh"
+CONFIG_DIR="$SCRIPT_DIR/../../config"
+CUSTOM_DIR="$HOME/.oh-my-zsh/custom"
 
-if [ ! -f "$ENV_DEST" ]; then
-  echo "Deploying environment.zsh to $ENV_DEST..."
-  cp "$ENV_SRC" "$ENV_DEST"
-else
-  echo "environment.zsh already exists at $ENV_DEST, skipping."
-fi
+for src in "$CONFIG_DIR"/*.zsh; do
+  [ -f "$src" ] || continue
+  dest="$CUSTOM_DIR/$(basename "$src")"
+  if [ ! -f "$dest" ]; then
+    echo "Deploying $(basename "$src") to $dest..."
+    cp "$src" "$dest"
+  else
+    echo "$(basename "$src") already exists at $dest, skipping."
+  fi
+done
 
 echo "Done. Run 'source ~/.zshrc' after setup completes."
