@@ -82,6 +82,7 @@ Modules are organized by platform:
 | `14-ai-tools` | debian | Claude CLI, copilot-cli, codex, opencode (curl + npm + go) |
 | `15-zshrc-cleanup` | common | Moves installer-injected lines from `~/.zshrc` to `environment.zsh` |
 | `16-fastfetch` | common | fastfetch + hourly config |
+| `18-vimrc` | common | amix/vimrc ("The Ultimate vimrc") for classic Vim |
 
 ## Notes
 
