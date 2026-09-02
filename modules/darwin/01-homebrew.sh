@@ -23,4 +23,8 @@ else
   echo "anomalyco/tap already added."
 fi
 
+# Trust just the opencode formula (used by 14-ai-tools) rather than the whole
+# tap, to avoid Homebrew's tap trust warning without over-broadening trust.
+brew trust --formula anomalyco/tap/opencode
+
 echo "Done. Homebrew ready."
