@@ -11,16 +11,28 @@ else
   echo "Claude CLI already installed."
 fi
 
+if command -v claude &>/dev/null; then
+  echo "Installing obra/superpowers plugin for Claude Code..."
+  claude plugin marketplace add obra/superpowers-marketplace >/dev/null 2>&1 || true
+  claude plugin install superpowers@superpowers-marketplace --scope user >/dev/null 2>&1 || true
+fi
+
 # copilot-cli via npm
 if command -v npm &>/dev/null; then
   if ! command -v copilot &>/dev/null; then
     echo "Installing copilot-cli..."
-    npm install -g @githubnext/github-copilot-cli
+    npm install -g @github/copilot
   else
     echo "copilot-cli already installed."
   fi
 else
   echo "Skipping copilot-cli (npm not available — run after 09-node)."
+fi
+
+if command -v copilot &>/dev/null; then
+  echo "Installing obra/superpowers plugin for Copilot CLI..."
+  copilot plugin marketplace add obra/superpowers-marketplace >/dev/null 2>&1 || true
+  copilot plugin install superpowers@superpowers-marketplace >/dev/null 2>&1 || true
 fi
 
 # codex via npm
