@@ -1,23 +1,27 @@
 #!/usr/bin/env bash
 set -e
 
-echo "==> [09-NODE] Setting up NVM and Node.js..."
+echo "==> [09-NODE] Setting up FNM and Node.js..."
 
-if [ ! -d "$HOME/.nvm" ]; then
-  echo "Installing NVM v0.40.4..."
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+FNM_DIR="$HOME/.local/share/fnm"
+
+if [ ! -d "$FNM_DIR" ]; then
+  echo "Installing FNM..."
+  curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 else
-  echo "NVM already installed."
+  echo "FNM already installed."
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export PATH="$FNM_DIR:$PATH"
+eval "$(fnm env)"
 
-if ! nvm ls | grep -q "v24.13.1"; then
+if ! fnm list | grep -q "v24.13.1"; then
   echo "Installing Node v24.13.1..."
-  nvm install v24.13.1
+  fnm install v24.13.1
 else
   echo "Node v24.13.1 already installed."
 fi
+
+fnm default v24.13.1
 
 echo "Done. Node $(node --version) ready."

@@ -22,9 +22,9 @@ echo "Backed up ~/.zshrc to ~/.zshrc.bak"
 
 # Patterns injected by installers that belong in environment.zsh
 PATTERNS=(
-  "NVM_DIR"
-  'nvm\.sh'
-  'nvm/bash_completion'
+  "FNM_PATH"
+  'fnm env'
+  'fnm_multishell'
   'SDKMAN_DIR'
   'sdkman-init\.sh'
   '\.cargo/env'

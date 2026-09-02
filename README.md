@@ -71,7 +71,7 @@ Modules are organized by platform:
 | `07-go` | debian | bison (apt) + GVM + Go 1.26.0 |
 | `08-python` | darwin | Python 3.14 & 3.12 (Homebrew) + `uv` |
 | `08-python` | debian | Python 3.14 & 3.12 (deadsnakes PPA) + `uv` |
-| `09-node` | common | NVM + Node.js v24.13.1 |
+| `09-node` | common | FNM + Node.js v24.13.1 |
 | `10-java` | common | SDKMAN + Java 25.0.2-open |
 | `11-dotnet` | common | .NET SDK (via dotnet-install.sh) |
 | `12-docker` | darwin | Docker + Colima + docker-compose + CLI plugin symlink |
@@ -111,5 +111,5 @@ Modules are organized by platform:
 - Python (platform-aware)
 - .NET
 - GVM (Go)
-- NVM (Node)
+- FNM (Node)
 - SDKMAN (Java)
