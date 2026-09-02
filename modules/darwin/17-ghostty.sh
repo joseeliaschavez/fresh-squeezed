@@ -6,8 +6,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "==> [17-GHOSTTY] Setting up Ghostty terminal..."
 
 if ! brew list --cask ghostty &>/dev/null; then
-  echo "Installing Ghostty..."
-  brew install --cask ghostty
+  if [ -d "/Applications/Ghostty.app" ]; then
+    echo "Ghostty.app already present but not tracked by Homebrew; adopting it..."
+    brew install --cask ghostty --force
+  else
+    echo "Installing Ghostty..."
+    brew install --cask ghostty
+  fi
 else
   echo "Ghostty already installed."
 fi

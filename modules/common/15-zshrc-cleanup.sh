@@ -50,8 +50,10 @@ for pattern in "${PATTERNS[@]}"; do
     fi
   done < <(grep -E "$pattern" "$ZSHRC" 2>/dev/null || true)
 
-  # Remove matched lines from .zshrc
-  sed -i.tmp -E "/$pattern/d" "$ZSHRC"
+  # Remove matched lines from .zshrc. Use '#' as the sed delimiter since some
+  # patterns (e.g. 'nvm/bash_completion') contain '/', which would otherwise
+  # break the default /pattern/d syntax.
+  sed -i.tmp -E "\#$pattern#d" "$ZSHRC"
 done
 
 # Clean up sed temp files

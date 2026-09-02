@@ -74,7 +74,14 @@ run_module() {
   elif [ -x "/usr/local/bin/brew" ]; then
     eval "$(/usr/local/bin/brew shellenv)"
   fi
-  bash "$script"
+  local code=0
+  bash "$script" || code=$?
+  if [ "$code" -ne 0 ]; then
+    echo "" >&2
+    echo "ERROR: Module '$name' failed (exit code $code). Aborting setup." >&2
+    echo "Fix the issue, then resume with: $0 --module $name" >&2
+    exit 1
+  fi
 }
 
 # Parse args
@@ -99,9 +106,14 @@ if [ -n "$SINGLE_MODULE" ]; then
   }
   run_module "$script"
 else
-  while IFS= read -r script; do
+  # Read the module list from fd 3, not stdin (fd 0). Modules run via
+  # `bash "$script"` inherit stdin, and any interactive prompt inside a
+  # module (e.g. a `brew install --cask` confirmation) would otherwise
+  # silently drain the remaining module list from this loop, causing
+  # later modules to be skipped with no error.
+  while IFS= read -r script <&3; do
     run_module "$script"
-  done < <(build_module_list)
+  done 3< <(build_module_list)
   echo ""
   echo "========================================"
   echo "Setup complete! Run: source ~/.zshrc"
