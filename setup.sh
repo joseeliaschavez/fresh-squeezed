@@ -5,6 +5,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Load platform detection
 source "$SCRIPT_DIR/lib/platform.sh"
+source "$SCRIPT_DIR/lib/ui.sh"
+source "$SCRIPT_DIR/lib/select-agents.sh"
 PLATFORM=$(detect_platform)
 
 if [ "$PLATFORM" = "unsupported" ]; then
@@ -106,6 +108,10 @@ if [ -n "$SINGLE_MODULE" ]; then
   }
   run_module "$script"
 else
+  print_banner
+  # Ask once, up front, before any module runs. Exported as FS_AI_AGENTS.
+  select_ai_agents "$PLATFORM"
+
   # Read the module list from fd 3, not stdin (fd 0). Modules run via
   # `bash "$script"` inherit stdin, and any interactive prompt inside a
   # module (e.g. a `brew install --cask` confirmation) would otherwise
