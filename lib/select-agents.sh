@@ -10,8 +10,8 @@ source "$_LIB_DIR/ui.sh"
 
 ai_agents_for_platform() {
   case "${1:-}" in
-    darwin) echo "claude copilot codex opencode pi" ;;
-    *)      echo "claude copilot codex opencode" ;;
+    darwin) echo "claude copilot codex opencode pi omp" ;;
+    *)      echo "claude copilot codex opencode pi omp" ;;
   esac
 }
 

@@ -72,6 +72,28 @@ if ai_agent_selected opencode; then
     echo "Skipping opencode (go not available — run after 07-go)."
   fi
 fi
+if ai_agent_selected pi; then
+  if ! command -v pi &>/dev/null; then
+    echo "Installing Pi agent..."
+    curl -fsSL https://pi.dev/install.sh | sh
+  else
+    echo "Pi agent already installed."
+  fi
+
+  if command -v pi &>/dev/null; then
+    echo "Installing obra/superpowers for Pi agent..."
+    pi install git:github.com/obra/superpowers >/dev/null 2>&1 || true
+  fi
+fi
+
+if ai_agent_selected omp; then
+  if ! command -v omp &>/dev/null; then
+    echo "Installing omp (Oh My Pi)..."
+    curl -fsSL https://omp.sh/install | sh
+  else
+    echo "omp already installed."
+  fi
+fi
 
 # Agent document tooling (conversion + OCR)
 if ai_any_agent_selected; then

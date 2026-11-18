@@ -71,6 +71,15 @@ if ai_agent_selected pi; then
   fi
 fi
 
+if ai_agent_selected omp; then
+  if ! command -v omp &>/dev/null; then
+    echo "Installing omp (Oh My Pi)..."
+    curl -fsSL https://omp.sh/install | sh
+  else
+    echo "omp already installed."
+  fi
+fi
+
 # Agent document tooling (conversion + OCR)
 if ai_any_agent_selected; then
   for formula in pandoc poppler ocrmypdf; do
