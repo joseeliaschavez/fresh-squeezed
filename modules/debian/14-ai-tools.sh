@@ -59,4 +59,28 @@ else
   echo "Skipping opencode (go not available — run after 07-go)."
 fi
 
+# Agent document tooling (conversion + OCR)
+for pkg in pandoc poppler-utils ocrmypdf; do
+  if ! dpkg -s "$pkg" &>/dev/null; then
+    echo "Installing $pkg..."
+    sudo apt install -y "$pkg"
+  else
+    echo "$pkg already installed."
+  fi
+done
+
+if command -v uv &>/dev/null; then
+  for spec in "markitdown[all]:markitdown" "marker-pdf:marker_single" "docling:docling"; do
+    pkg="${spec%%:*}"; bin="${spec##*:}"
+    if ! command -v "$bin" &>/dev/null; then
+      echo "Installing $pkg..."
+      uv tool install "$pkg"
+    else
+      echo "$pkg already installed."
+    fi
+  done
+else
+  echo "Skipping uv tools (uv not available — run after 08-python)."
+fi
+
 echo "Done. AI tools installed."

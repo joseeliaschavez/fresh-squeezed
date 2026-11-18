@@ -55,4 +55,28 @@ if command -v pi &>/dev/null; then
   pi install git:github.com/obra/superpowers >/dev/null 2>&1 || true
 fi
 
+# Agent document tooling (conversion + OCR)
+for formula in pandoc poppler ocrmypdf; do
+  if ! brew list "$formula" &>/dev/null; then
+    echo "Installing $formula..."
+    brew install "$formula"
+  else
+    echo "$formula already installed."
+  fi
+done
+
+if command -v uv &>/dev/null; then
+  for spec in "markitdown[all]:markitdown" "marker-pdf:marker_single" "docling:docling"; do
+    pkg="${spec%%:*}"; bin="${spec##*:}"
+    if ! command -v "$bin" &>/dev/null; then
+      echo "Installing $pkg..."
+      uv tool install "$pkg"
+    else
+      echo "$pkg already installed."
+    fi
+  done
+else
+  echo "Skipping uv tools (uv not available — run after 08-python)."
+fi
+
 echo "Done. AI tools installed."

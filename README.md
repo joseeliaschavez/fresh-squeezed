@@ -78,8 +78,8 @@ Modules are organized by platform:
 | `12-docker` | debian | Docker CE + docker-compose-plugin (official apt repo) |
 | `13-dev-tools` | darwin | lazygit, gdu, temporal, pnpm, ripgrep, gh, Sublime Text |
 | `13-dev-tools` | debian | lazygit, gdu, temporal, pnpm, ripgrep, gh, Sublime Text (apt + binary releases) |
-| `14-ai-tools` | darwin | Claude CLI, copilot-cli, codex, opencode, Pi agent — obra/superpowers plugin installed for Claude Code, Copilot CLI, and Pi |
-| `14-ai-tools` | debian | Claude CLI, copilot-cli, codex, opencode (curl + npm + go) — obra/superpowers plugin installed for Claude Code and Copilot CLI |
+| `14-ai-tools` | darwin | Claude CLI, copilot-cli, codex, opencode, Pi agent — obra/superpowers plugin installed for Claude Code, Copilot CLI, and Pi; document tooling: pandoc, poppler, ocrmypdf, markitdown, marker-pdf, docling |
+| `14-ai-tools` | debian | Claude CLI, copilot-cli, codex, opencode (curl + npm + go) — obra/superpowers plugin installed for Claude Code and Copilot CLI; document tooling: pandoc, poppler-utils, ocrmypdf, markitdown, marker-pdf, docling |
 | `15-zshrc-cleanup` | common | Moves installer-injected lines from `~/.zshrc` to `environment.zsh` |
 | `16-fastfetch` | common | fastfetch + hourly config |
 | `18-vimrc` | common | amix/vimrc ("The Ultimate vimrc") for classic Vim |
